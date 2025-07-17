@@ -1,0 +1,33 @@
+public class Movie {
+    private String title;
+    private String director;
+    private int year;
+    private String genre;
+    private double rating;
+
+    // Constructor
+    public Movie(String title, String director, int year, String genre, double rating) {
+        this.title = title;
+        this.director = director;
+        this.year = year;
+        this.genre = genre;
+        this.rating = rating;
+    }
+
+    // Overriding toString() method
+    @Override
+    public String toString() {
+        return "Movie Details:\n" +
+               "Title    : " + title + "\n" +
+               "Director : " + director + "\n" +
+               "Year     : " + year + "\n" +
+               "Genre    : " + genre + "\n" +
+               "Rating   : " + rating + "/10";
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        Movie movie = new Movie("Inception", "Christopher Nolan", 2010, "Sci-Fi", 8.8);
+        System.out.println(movie);  // toString() is called automatically
+    }
+}
