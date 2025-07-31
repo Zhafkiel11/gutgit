@@ -1,0 +1,81 @@
+public class StudentProfile {
+    // Private attributes
+    private String studentName;
+    private String studentID;
+    private String email;
+    private double GPA;
+
+    // Constructor
+    public StudentProfile(String studentName, String studentID, String email, double GPA) {
+        this.studentName = studentName;
+        this.studentID = studentID;
+        this.email = email;
+        this.GPA = GPA;
+    }
+
+    // Getters
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public double getGPA() {
+        return GPA;
+    }
+
+    // Setters
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGPA(double GPA) {
+        this.GPA = GPA;
+    }
+
+    // Method to return academic standing based on GPA
+    public String getAcademicStanding() {
+        if (GPA >= 3.5) {
+            return "Honors";
+        } else if (GPA >= 2.0) {
+            return "Good Standing";
+        } else {
+            return "Probation";
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a student profile
+        StudentProfile student = new StudentProfile("John Doe", "S10001", "john.doe@example.com", 3.6);
+
+        // Display student info
+        System.out.println("Name: " + student.getStudentName());
+        System.out.println("ID: " + student.getStudentID());
+        System.out.println("Email: " + student.getEmail());
+        System.out.println("GPA: " + student.getGPA());
+        System.out.println("Academic Standing: " + student.getAcademicStanding());
+
+        // Update GPA
+        student.setGPA(1.9);
+        System.out.println("\nUpdated GPA: " + student.getGPA());
+        System.out.println("Updated Academic Standing: " + student.getAcademicStanding
+        ());
+    }
+
+}
