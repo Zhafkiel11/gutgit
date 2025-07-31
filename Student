@@ -1,0 +1,94 @@
+Here's an example implementation of a `StudentProfile` class in Java with private attributes and a method to determine academic standing based on GPA:
+
+```
+public class StudentProfile {
+    private String studentName;
+    private String studentID;
+    private String email;
+    private double gpa;
+
+    // Constructor
+    public StudentProfile(String studentName, String studentID, String email, double gpa) {
+        this.studentName = studentName;
+        this.studentID = studentID;
+        this.email = email;
+        setGpa(gpa); // Validate GPA through setter
+    }
+
+    // Getters
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+
+    // Setters with validation
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGpa(double gpa) {
+        if (gpa >= 0.0 && gpa <= 4.0) {
+            this.gpa = gpa;
+        } else {
+            System.out.println("Invalid GPA. GPA must be between 0.0 and 4.0.");
+        }
+    }
+
+    // Method to determine academic standing
+    public String getAcademicStanding() {
+        if (gpa >= 3.5) {
+            return "Dean's List";
+        } else if (gpa >= 3.0) {
+            return "Good Standing";
+        } else if (gpa >= 2.0) {
+            return "Probation";
+        } else {
+            return "Academic Suspension";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "StudentProfile{" +
+                "studentName='" + studentName + '\'' +
+                ", studentID='" + studentID + '\'' +
+                ", email='" + email + '\'' +
+                ", gpa=" + gpa +
+                ", academicStanding='" + getAcademicStanding() + '\'' +
+                '}';
+    }
+
+    public static void main(String[] args) {
+        StudentProfile student = new StudentProfile("John Doe", "S12345", "john.doe@example.com", 3.7);
+        System.out.println(student.toString());
+    }
+}
+```
+
+In this implementation:
+
+- We define a `StudentProfile` class with private attributes for `studentName`, `studentID`, `email`, and `gpa`.
+- The constructor initializes these attributes and validates the GPA through the `setGpa` method.
+- Getter methods provide access to the attributes, while setter methods allow modification with validation for GPA.
+- The `getAcademicStanding` method determines the academic standing based on the GPA, categorizing students into "Dean's List," "Good Standing," "Probation," or "Academic Suspension."
+- The `toString` method returns a string representation of the `StudentProfile` object, including the academic standing.
+- In the `main` method, we create a `StudentProfile` object and demonstrate its usage by printing the student's details and academic standing.
