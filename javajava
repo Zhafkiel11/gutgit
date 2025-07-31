@@ -1,0 +1,146 @@
+import java.io.*;
+import javax.swing.*;
+import javax.swing.table.*;
+
+public class StudentInfoSystem extends javax.swing.JFrame {
+    DefaultTableModel model;
+    String filePath = "student_db.txt";
+
+    public StudentInfoSystem() {
+        initComponents();
+        initTable();
+        loadFile();
+    }
+
+    private void initTable() {
+        model = new DefaultTableModel(new String[]{"ID", "First Name", "Middle Name", "Last Name", "Course"}, 0);
+        table.setModel(model);
+    }
+
+    private void loadFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null)
+                model.addRow(line.split(","));
+        } catch (IOException ignored) {}
+    }
+
+    private void saveFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    bw.write(model.getValueAt(i, j).toString() + (j < model.getColumnCount() - 1 ? "," : ""));
+                }
+                bw.newLine();
+            }
+        } catch (IOException ignored) {}
+    }
+
+    private void clearFields() {
+        txtID.setText(""); txtFirst.setText(""); txtMid.setText(""); txtLast.setText(""); txtCourse.setText("");
+        txtID.requestFocus();
+    }
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
+        String[] row = {
+            txtID.getText().toUpperCase(),
+            txtFirst.getText().toUpperCase(),
+            txtMid.getText().toUpperCase(),
+            txtLast.getText().toUpperCase(),
+            txtCourse.getText().toUpperCase()
+        };
+        model.addRow(row);
+        clearFields();
+        saveFile();
+    }
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            model.setValueAt(txtID.getText().toUpperCase(), row, 0);
+            model.setValueAt(txtFirst.getText().toUpperCase(), row, 1);
+            model.setValueAt(txtMid.getText().toUpperCase(), row, 2);
+            model.setValueAt(txtLast.getText().toUpperCase(), row, 3);
+            model.setValueAt(txtCourse.getText().toUpperCase(), row, 4);
+            saveFile();
+        } else {
+            JOptionPane.showMessageDialog(this, "Select a row to update.");
+        }
+    }
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            model.removeRow(row);
+            clearFields();
+            saveFile();
+        } else {
+            JOptionPane.showMessageDialog(this, "Select a row to delete.");
+        }
+    }
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {
+        clearFields();
+    }
+
+    private void btnQuitActionPerformed(java.awt.event.ActionEvent evt) {
+        if (JOptionPane.showConfirmDialog(this, "Quit program?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+            System.exit(0);
+    }
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {
+        int row = table.getSelectedRow();
+        txtID.setText(model.getValueAt(row, 0).toString());
+        txtFirst.setText(model.getValueAt(row, 1).toString());
+        txtMid.setText(model.getValueAt(row, 2).toString());
+        txtLast.setText(model.getValueAt(row, 3).toString());
+        txtCourse.setText(model.getValueAt(row, 4).toString());
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new StudentInfoSystem().setVisible(true));
+    }
+
+    // UI components declaration
+    private javax.swing.JTable table = new JTable();
+    private javax.swing.JTextField txtID = new JTextField(), txtFirst = new JTextField(),
+        txtMid = new JTextField(), txtLast = new JTextField(), txtCourse = new JTextField();
+    private javax.swing.JButton btnAdd = new JButton("Add"), btnUpdate = new JButton("Update"),
+        btnDelete = new JButton("Delete"), btnClear = new JButton("Clear"), btnQuit = new JButton("Quit");
+
+    private void initComponents() {
+        setTitle("Student Information System");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 400);
+        setLocationRelativeTo(null);
+        setLayout(new java.awt.BorderLayout());
+
+        JPanel formPanel = new JPanel(new java.awt.GridLayout(6, 2));
+        formPanel.add(new JLabel("Student ID")); formPanel.add(txtID);
+        formPanel.add(new JLabel("First Name")); formPanel.add(txtFirst);
+        formPanel.add(new JLabel("Middle Name")); formPanel.add(txtMid);
+        formPanel.add(new JLabel("Last Name")); formPanel.add(txtLast);
+        formPanel.add(new JLabel("Course")); formPanel.add(txtCourse);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(btnAdd); buttonPanel.add(btnUpdate);
+        buttonPanel.add(btnDelete); buttonPanel.add(btnClear); buttonPanel.add(btnQuit);
+
+        add(formPanel, java.awt.BorderLayout.NORTH);
+        add(new JScrollPane(table), java.awt.BorderLayout.CENTER);
+        add(buttonPanel, java.awt.BorderLayout.SOUTH);
+
+        // Add listeners
+        btnAdd.addActionListener(this::btnAddActionPerformed);
+        btnUpdate.addActionListener(this::btnUpdateActionPerformed);
+        btnDelete.addActionListener(this::btnDeleteActionPerformed);
+        btnClear.addActionListener(this::btnClearActionPerformed);
+        btnQuit.addActionListener(this::btnQuitActionPerformed);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+    }
+        }
+            
