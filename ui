@@ -1,0 +1,83 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class StudentProfileUI {
+
+    public static void main(String[] args) {
+        // Create a sample student
+        StudentProfile student = new StudentProfile("John Doe", "S10001", "john.doe@example.com", 3.6);
+
+        // Create the main frame
+        JFrame frame = new JFrame("Student Profile");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(7, 2, 5, 5));
+
+        // Labels
+        JLabel nameLabel = new JLabel("Name:");
+        JLabel idLabel = new JLabel("Student ID:");
+        JLabel emailLabel = new JLabel("Email:");
+        JLabel gpaLabel = new JLabel("GPA:");
+        JLabel standingLabel = new JLabel("Academic Standing:");
+        JLabel newGpaLabel = new JLabel("Update GPA:");
+
+        // Text fields (read-only for current values)
+        JTextField nameField = new JTextField(student.getStudentName());
+        nameField.setEditable(false);
+
+        JTextField idField = new JTextField(student.getStudentID());
+        idField.setEditable(false);
+
+        JTextField emailField = new JTextField(student.getEmail());
+        emailField.setEditable(false);
+
+        JTextField gpaField = new JTextField(String.valueOf(student.getGPA()));
+        gpaField.setEditable(false);
+
+        JTextField standingField = new JTextField(student.getAcademicStanding());
+        standingField.setEditable(false);
+
+        // Input field for new GPA
+        JTextField newGpaField = new JTextField();
+
+        // Button to update GPA
+        JButton updateButton = new JButton("Update GPA");
+
+        // Action listener for the update button
+        updateButton.addActionListener(e -> {
+            try {
+                double newGpa = Double.parseDouble(newGpaField.getText());
+                if (newGpa < 0.0 || newGpa > 4.0) {
+                    JOptionPane.showMessageDialog(frame, "Please enter a GPA between 0.0 and 4.0");
+                } else {
+                    student.setGPA(newGpa);
+                    gpaField.setText(String.valueOf(student.getGPA()));
+                    standingField.setText(student.getAcademicStanding());
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Invalid GPA. Please enter a number.");
+            }
+        });
+
+        // Add components to the frame
+        frame.add(nameLabel);
+        frame.add(nameField);
+        frame.add(idLabel);
+        frame.add(idField);
+        frame.add(emailLabel);
+        frame.add(emailField);
+        frame.add(gpaLabel);
+        frame.add(gpaField);
+        frame.add(standingLabel);
+        frame.add(standingField);
+        frame.add(newGpaLabel);
+        frame.add(newGpaField);
+        frame.add(new JLabel()); // empty space
+        frame.add(updateButton);
+
+        // Display the frame
+        frame.setVisible(
+true);
+    }
+}
