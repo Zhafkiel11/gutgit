@@ -1,0 +1,61 @@
+public class StudentProfile {
+    // Private attributes
+    private String studentName;
+    private String studentID;
+    private String email;
+    private double GPA;
+
+    // Constructor
+    public StudentProfile(String studentName, String studentID, String email, double GPA) {
+        this.studentName = studentName;
+        this.studentID = studentID;
+        this.email = email;
+        this.GPA = GPA;
+    }
+
+    // Getters
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public double getGPA() {
+        return GPA;
+    }
+
+    // Setters
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGPA(double GPA) {
+        this.GPA = GPA;
+    }
+
+    // Method to determine academic standing based on GPA
+    public String getAcademicStanding() {
+        if (GPA >= 3.5) {
+            return "Honors";
+        } else if (GPA >= 2.0) {
+            return "Good Standing";
+        } else {
+            return "Probation";
+       
+}
+    }
+}
