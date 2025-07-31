@@ -1,0 +1,65 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class StudentProfileGUI extends JFrame {
+    private JTextField nameField, idField, emailField, gpaField;
+    private JLabel standingLabel;
+
+    public StudentProfileGUI() {
+        setTitle("Student Profile Form");
+        setLayout(new GridLayout(6, 2, 10, 10));
+
+        // Input fields
+        add(new JLabel("Student Name:"));
+        nameField = new JTextField();
+        add(nameField);
+
+        add(new JLabel("Student ID:"));
+        idField = new JTextField();
+        add(idField);
+
+        add(new JLabel("Email:"));
+        emailField = new JTextField();
+        add(emailField);
+
+        add(new JLabel("GPA:"));
+        gpaField = new JTextField();
+        add(gpaField);
+
+        // Button
+        JButton submitButton = new JButton("Submit");
+        add(submitButton);
+
+        standingLabel = new JLabel("Academic Standing: ");
+        add(standingLabel);
+
+        // Button Action
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String name = nameField.getText();
+                    String id = idField.getText();
+                    String email = emailField.getText();
+                    double gpa = Double.parseDouble(gpaField.getText());
+
+                    StudentProfile student = new StudentProfile(name, id, email, gpa);
+                    String standing = student.getAcademicStanding();
+                    standingLabel.setText("Academic Standing: " + standing);
+                } catch (NumberFormatException ex) {
+                    standingLabel.setText("Please enter a valid GPA.");
+                }
+            }
+        });
+
+        // Frame setup
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new StudentProfileGU
+        I();
+    }
+}
